@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 8008
 
 app.get("/", (req, res) =>
 {
-	res.send({ hi: 'there'});
+	res.send({ by: 'buddy'});
 })
 
 //tells the app to listen on port 5000
