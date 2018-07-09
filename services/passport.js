@@ -1,6 +1,10 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const mongoose = require('mongoose');
 require('dotenv').config();
+
+// fetches the user model from database
+const User = mongoose.model('user');
 
 // tells passport how to authenticate with the google oauth strategy
 passport.use(new GoogleStrategy({
@@ -11,8 +15,7 @@ passport.use(new GoogleStrategy({
 	callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) =>
 	{
-		console.log('access token', accessToken);
-		console.log('refresh token', refreshToken);
-		console.log('profile', profile);
+		//saves the user to the database
+		new User({ googleId: profile.id}).save();
 	})
 );
