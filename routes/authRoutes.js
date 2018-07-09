@@ -14,4 +14,16 @@ router.get('/',
 // When user is logged in they 
 router.get('/callback', passport.authenticate('google'));
 
+router.get('/logout', (req, res) =>
+{
+	// Kills cookie saved in the sassion
+	req.logout();
+	res.send(req.user);
+});
+
+router.get('/current_user', (req, res) => 
+{
+	res.send(req.user);
+});
+
 module.exports = router;
