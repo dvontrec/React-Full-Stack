@@ -1,7 +1,8 @@
 const passport = require('passport');
+const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
-require('dotenv').config();
+
 
 // fetches the user model from database
 const User = mongoose.model('user');
@@ -27,8 +28,8 @@ passport.deserializeUser((id, done) =>
 // tells passport how to authenticate with the google oauth strategy
 passport.use(new GoogleStrategy({
 	//passes the id and secret for this application
-	clientID: process.env.CLIENT_ID,
-	clientSecret: process.env.CLIENT_SECRET,
+	clientID: keys.googleClientID,
+	clientSecret: keys.googleClientSecret,
 	//sets up the rout the user goes to after login
 	callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) =>
