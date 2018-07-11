@@ -31,7 +31,9 @@ passport.use(new GoogleStrategy({
 	clientID: keys.googleClientID,
 	clientSecret: keys.googleClientSecret,
 	//sets up the rout the user goes to after login
-	callbackURL: '/auth/google/callback'
+	callbackURL: '/auth/google/callback',
+	//tells google auth to trust proxies. helps when hosted
+	proxy: true
 }, (accessToken, refreshToken, profile, done) =>
 	{
 		// Searches the database for the logged in user, returns a promise
