@@ -34,25 +34,17 @@ passport.use(new GoogleStrategy({
 	callbackURL: '/auth/google/callback',
 	//tells google auth to trust proxies. helps when hosted
 	proxy: true
-}, (accessToken, refreshToken, profile, done) =>
+},  async (accessToken, refreshToken, profile, done) =>
 	{
 		// Searches the database for the logged in user, returns a promise
-		User.findOne({googleId: profile.id})
-			.then((existingUser) => 
-			{
-				// if the user already exista
-				if(existingUser)
-				{
-					done(null, existingUser);
-				}
-				//if the user is a new user
-				else
-				{
-					//saves the user to the database
-					new User({ googleId: profile.id}).save()
-						.then(user => done(null, user));
-
-				}
-			});
+		const existingUser =  await User.findOne({googleId: profile.id})
+		// if the user already exista
+		if(existingUser)
+		{
+			return done(null, existingUser);
+		}
+		//saves the user to the database if there is no existing user
+		const user = await new User({ googleId: profile.id}).save()
+		done(null, user);
 	})
 );
