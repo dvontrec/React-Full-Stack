@@ -6,7 +6,7 @@
     "/auth/google": {
       "target": "http://localhost:8008"
     },
-    "/auth/google/api": {
+    "/auth/google/api/*": {
       "target": "http://localhost:8008"
     }
   },
