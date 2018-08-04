@@ -22,7 +22,7 @@ router.get("/callback", passport.authenticate("google"), (req, res) => {
 router.get("/api/logout", (req, res) => {
 	// Kills cookie saved in the sassion
 	req.logout();
-	res.send(req.user);
+	res.redirect("/");
 });
 
 router.get("/api/current_user", (req, res) => {
