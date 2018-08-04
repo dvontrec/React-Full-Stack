@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
@@ -10,24 +11,30 @@ const authRoutes = require('./routes/authRoutes');
 const PORT = process.env.PORT || 8008;
 
 // Connects to the remote database and clears URLParse error
-mongoose.connect(keys.mongoURL, { useNewUrlParser: true });
+mongoose.connect(
+	keys.mongoURL,
+	{ useNewUrlParser: true }
+);
 
 const app = express();
 
+app.use(bodyParser.json());
 //tells express that we will be using cookies
-app.use(cookieSession({
-	maxAge: 30 * 24 * 60 * 60 * 1000,  //saves the cookie for 30 days 24 hours in a day 60 minutes in an hour 60 seconds in a minute 1000 milliseconds in a second
-	// encrypts the cookie
-	keys: [keys.cookieKey]
-}));
+app.use(
+	cookieSession({
+		maxAge: 30 * 24 * 60 * 60 * 1000, //saves the cookie for 30 days 24 hours in a day 60 minutes in an hour 60 seconds in a minute 1000 milliseconds in a second
+		// encrypts the cookie
+		keys: [keys.cookieKey]
+	})
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth/google', authRoutes);
+require('./routes/billingRoutes')(app);
 
-//tells the app to listen on the environment port 
-app.listen(PORT, ()=>
-{
-	console.log("app is running", PORT)
-})
+//tells the app to listen on the environment port
+app.listen(PORT, () => {
+	console.log('app is running', PORT);
+});
