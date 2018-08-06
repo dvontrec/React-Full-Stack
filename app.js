@@ -34,6 +34,16 @@ app.use(passport.session());
 app.use('/auth/google', authRoutes);
 require('./routes/billingRoutes')(app);
 
+// If the envirement is production not development
+if (process.env.NODE_ENV === 'production') {
+	// Express will serve production assets
+	app.use(express.static('client/build'));
+	// Express will serve index.html file for wildcard routes
+	const path = require('path')
+	app.get('*' (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 //tells the app to listen on the environment port
 app.listen(PORT, () => {
 	console.log('app is running', PORT);
