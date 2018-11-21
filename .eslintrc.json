@@ -6,6 +6,6 @@
   },
   "rules": {
     "prettier/prettier": ["error"],
-    "function-paren-newline": ["error", "never"]
+    "function-paren-newline": ["error", "consistent"]
   }
 }
