@@ -20,10 +20,10 @@ mongoose.connect(
 const app = express();
 
 app.use(bodyParser.json());
-//tells express that we will be using cookies
+// tells express that we will be using cookies
 app.use(
   cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000, //saves the cookie for 30 days 24 hours in a day 60 minutes in an hour 60 seconds in a minute 1000 milliseconds in a second
+    maxAge: 30 * 24 * 60 * 60 * 1000, // saves the cookie for 30 days 24 hours in a day 60 minutes in an hour 60 seconds in a minute 1000 milliseconds in a second
     // encrypts the cookie
     keys: [keys.cookieKey]
   })
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-//tells the app to listen on the environment port
+// tells the app to listen on the environment port
 app.listen(PORT, () => {
   console.log('app is running', PORT);
 });
